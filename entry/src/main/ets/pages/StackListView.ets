@@ -60,24 +60,24 @@ struct StackList{
    */
   @BuilderParam itemView: (item: any,index: number) => void;
   /**
-   * 透明度指数
+   * 透明度指数，默认 10
    */
   @State opacityVal: number = 10;
 
   /**
-   * 每个item的偏移量
+   * 每个item的偏移量，默认100
    */
   @State offsetVal: number = 100;
 
   /**
-   * 缩放偏移量
+   * 缩放偏移量，默认 10
    */
   @State offsetScale: number = 10;
 
   /**
-   * 是否垂直布局
+   * 是否垂直布局,默认垂直（true）
    */
-  @State isVertical: boolean = false;
+  @State isVertical: boolean = true;
 
   /**
    * 滑动位移大小
@@ -89,6 +89,9 @@ struct StackList{
    */
   @State private totalOffset: number = 0;
 
+  /**
+   * 保存偏移量
+   */
   @State private indexArr: Array<number> = [];
 
   /**
