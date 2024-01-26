@@ -5,5 +5,6 @@
   "main": "index.ets",
   "author": "Rainvice",
   "license": "ISC",
+  "repository": "https://gitee.com/MUYS/rvcomponent",
   "dependencies": {}
 }
