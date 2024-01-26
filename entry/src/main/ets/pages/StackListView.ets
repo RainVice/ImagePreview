@@ -4,7 +4,7 @@ import { Layout } from '../common/constants/Layout';
 @Entry
 @Component
 struct StackListView {
-  @State datas: Array<number>  = [1,2,3,4,5,6,7,8];
+  @State datas: Array<number>  = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
 
   build() {
@@ -54,7 +54,7 @@ struct StackList{
   /**
    * 数据
    */
-  @Link datas: Array<any>;
+  @Link @Watch('aboutToAppear') datas: Array<any>;
   /**
    * 子组件
    */
@@ -62,34 +62,34 @@ struct StackList{
   /**
    * 透明度指数
    */
-  @State opacityVal: number = 20;
+  @State opacityVal: number = 10;
 
   /**
    * 每个item的偏移量
    */
-  @State offsetY: number = 100;
+  @State offsetVal: number = 100;
 
   /**
    * 缩放偏移量
    */
-  @State offsetScale: number = 7;
+  @State offsetScale: number = 10;
 
   /**
-   * 垂直位移大小
+   * 是否垂直布局
    */
-  @State private verticalOffset: number = 0;
+  @State isVertical: boolean = false;
+
+  /**
+   * 滑动位移大小
+   */
+  @State private slideOffset: number = 0;
 
   /**
    * 总偏移量
    */
-  @State private totalOffsetY: number = 0;
+  @State private totalOffset: number = 0;
 
   @State private indexArr: Array<number> = [];
-
-  /**
-   * 中心 item 索引
-   */
-  private centerIndex: number = 0;
 
   /**
    * 当前索引
@@ -97,59 +97,60 @@ struct StackList{
   private currentIndex: number = 0;
 
   /**
-   * 获取拖动后的 Y 偏移量
-   * @param y 初始 y 值
+   * 获取拖动后的偏移量
+   * @param currentIndex 当前位置索引
    * @returns
    */
-  getOffsetY(y: number): number{
-    return y * this.offsetY + this.verticalOffset + this.totalOffsetY;
+  getOffset(currentIndex: number): number{
+    return currentIndex * this.offsetVal + this.slideOffset + this.totalOffset;
   }
 
   /**
    * 获取拖动后的透明度变化
-   * @param y 初始 y 值
+   * @param currentIndex 当前位置索引
    * @returns
    */
-  getOpacity(y: number): number{
-    let offset: number = y  * this.offsetY + this.verticalOffset + this.totalOffsetY;
+  getOpacity(currentIndex: number): number{
+    let offset: number = currentIndex  * this.offsetVal + this.slideOffset + this.totalOffset;
     let opacity: number = 1 - Math.abs(offset) / 100 / this.opacityVal;
     return opacity < 0 ? 0 : opacity;
   }
 
   /**
    * 获取拖动后的大小变化
-   * @param y
+   * @param currentIndex 当前位置索引
    * @returns
    */
-  getScale(y: number): number{
-    let offset: number = y  * this.offsetY + this.verticalOffset + this.totalOffsetY;
+  getScale(currentIndex: number): number{
+    let offset: number = currentIndex  * this.offsetVal + this.slideOffset + this.totalOffset;
     let scale: number = 1 - Math.abs(offset) / 100 / this.offsetScale;
     return scale < 0 ? 0 : scale;
   }
 
   /**
    * 获取拖动后的层级
-   * @param index
+   * @param currentIndex 当前位置索引
    * @returns
    */
-  getZIndex(index: number): number{
-    let offset: number = (index - this.centerIndex)  * this.offsetY + this.verticalOffset + this.totalOffsetY;
+  getZIndex(currentIndex: number): number{
+    let offset: number = currentIndex  * this.offsetVal + this.slideOffset + this.totalOffset;
     // hilog.info(111,'stackList',`index: ${index}; offset: ${offset}`)
-    if (offset > -this.offsetY && offset < this.offsetY) {
+    if (offset > -this.offsetVal && offset < this.offsetVal) {
       return 999;
-    }else if (offset <= -this.offsetY){
-      return index;
-    }else if (offset >= this.offsetY){
-      return -index;
+    }else if (offset <= -this.offsetVal){
+      return currentIndex;
+    }else if (offset >= this.offsetVal){
+      return -currentIndex;
     }
   }
 
   aboutToAppear(){
-    this.centerIndex = Math.floor(this.datas.length / 2) + this.datas.length % 2;
-    this.datas = this.datas.splice(this.centerIndex).concat(this.datas);
+    let centerIndex: number = Math.floor(this.datas.length / 2) + this.datas.length % 2;
+    this.indexArr = [];
     for (let i = 0; i < this.datas.length; i++) {
       this.indexArr.push(i);
     }
+    this.handlePanGesture(centerIndex);
   }
 
   /**
@@ -180,32 +181,35 @@ struct StackList{
             this.itemView(item,index)
           }
         }
-        .offset({x: 0, y: this.getOffsetY(this.indexArr[index] - this.centerIndex)})
+        .offset({
+          x: this.isVertical ? 0 : this.getOffset(this.indexArr[index]),
+          y: this.isVertical ? this.getOffset(this.indexArr[index]) : 0
+        })
         .zIndex(this.getZIndex(this.indexArr[index]))
-        .opacity(this.getOpacity(this.indexArr[index] - this.centerIndex))
-        .scale({x: this.getScale(this.indexArr[index] - this.centerIndex), y: this.getScale(this.indexArr[index] - this.centerIndex) })
+        .opacity(this.getOpacity(this.indexArr[index]))
+        .scale({x: this.getScale(this.indexArr[index]), y: this.getScale(this.indexArr[index]) })
       },(item:any,_index: number) => JSON.stringify(item)
       )
     }
     .gesture(
-      PanGesture({direction: PanDirection.Vertical})
+      PanGesture({direction: this.isVertical ? PanDirection.Vertical : PanDirection.Horizontal})
         .onActionStart((event: GestureEvent) => {
-          this.verticalOffset = event.offsetY;
+          this.slideOffset = this.isVertical ? event.offsetY : event.offsetX;
         })
         .onActionUpdate((event: GestureEvent) => {
-          let curIndex = Math.round((this.totalOffsetY + event.offsetY) / this.offsetY);
+          let curIndex = Math.round((this.totalOffset + (this.isVertical ? event.offsetY : event.offsetX)) / this.offsetVal);
           this.handlePanGesture(curIndex - this.currentIndex);
           this.currentIndex = curIndex;
-          this.verticalOffset = event.offsetY;
+          this.slideOffset = this.isVertical ? event.offsetY : event.offsetX;
         })
         .onActionEnd((event: GestureEvent) => {
-          let end: number = Math.round((this.totalOffsetY + event.offsetY) / this.offsetY);
-          // hilog.info(111,'stackList',this.indexArr.toString())
+          let end: number = Math.round((this.totalOffset + (this.isVertical ? event.offsetY : event.offsetX)) / this.offsetVal);
+          hilog.info(111,'stackList',this.indexArr.toString())
           animateTo({
             duration: 300
           },() => {
-            this.totalOffsetY = end * this.offsetY;
-            this.verticalOffset = 0;
+            this.totalOffset = end * this.offsetVal;
+            this.slideOffset = 0;
           })
         })
     )
