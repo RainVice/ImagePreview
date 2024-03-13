@@ -7,7 +7,12 @@ struct StackListView {
   @State datas: Array<number>  = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
   build() {
     Column(){
-      StackList({datas: $datas,itemView: this.itemView})
+      StackList({
+        isVertical: false,
+        datas: $datas,
+        itemView: (item: any,index: number) => {this.itemView(item,index)},
+        offsetXY: 200
+      })
     }
     .width("100%")
     .height("100%")

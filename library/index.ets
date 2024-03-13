@@ -1,1 +1,1 @@
-export { StackList } from './src/main/ets/components/StackList/StackList'
+export * from './src/main/ets/components/StackList/StackList'
