@@ -1,7 +1,9 @@
 import { Layout } from '../../common/constants/Layout'
+import { DataType } from '../../common/type'
+
+
 @Component
 export struct StackList {
-
   // 是否垂直
   isVertical: boolean = true
   // 缩放偏移量，每个 item 缩放递减
@@ -14,9 +16,9 @@ export struct StackList {
   damping: number = 1;
 
   // 数据
-  @Link @Watch("initDate") datas: any[]
+  @Link @Watch("initDate") datas: DataType[]
   // 组件
-  @BuilderParam itemView: (item: object,index: number) => void
+  @BuilderParam itemView: (item: DataType,index: number) => void
   // 保存偏移量数组
   @State private posArr: number[] = []
   // 当前重点显示索引
@@ -110,7 +112,7 @@ export struct StackList {
 
   build() {
     Stack() {
-      ForEach(this.datas, (item: any, index: number) => {
+      ForEach(this.datas, (item: DataType, index: number) => {
         Column() {
           this.itemView(item, index)
         }

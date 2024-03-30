@@ -1,0 +1,1 @@
+export type DataType = object | number | string | boolean

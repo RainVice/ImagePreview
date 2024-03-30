@@ -1,7 +1,7 @@
 
 import router from '@ohos.router';
 
-class AnimPage{
+interface  AnimPage{
 
   name: string;
   page: string;

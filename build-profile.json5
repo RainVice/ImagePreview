@@ -1,12 +1,27 @@
 {
   "app": {
-    "signingConfigs": [],
-    "compileSdkVersion": 9,
-    "compatibleSdkVersion": 9,
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/rainvice/.ohos/config/auto_debug_HMOS-Custom-Components_com.example.animation_2850086000446513801.cer",
+          "storePassword": "0000001B73DF50766CA65AC49D3CAE817FE118E2CE1DA0743DDB02CB8C4DE33434C9CEF0989CFE56EDD0BD",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B310EB9B69C2537D2388419CB556A6F14FBB2105BA56FA359871BE3A64D709DA06ED3A614D4121D",
+          "profile": "/Users/rainvice/.ohos/config/auto_debug_HMOS-Custom-Components_com.example.animation_2850086000446513801.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/rainvice/.ohos/config/auto_debug_HMOS-Custom-Components_com.example.animation_2850086000446513801.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
         "signingConfig": "default",
+        "compileSdkVersion": "4.1.0(11)",
+        "compatibleSdkVersion": "4.1.0(11)",
+        "runtimeOS": "HarmonyOS",
       }
     ]
   },

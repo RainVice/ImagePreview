@@ -1,5 +1,5 @@
 
-import {StackList} from '@rv/rvcomponent'
+import { DataType, StackList} from '@rv/rvcomponent'
 
 @Entry
 @Component
@@ -8,9 +8,9 @@ struct StackListView {
   build() {
     Column(){
       StackList({
-        isVertical: false,
+        isVertical: true,
         datas: $datas,
-        itemView: (item: any,index: number) => {this.itemView(item,index)},
+        itemView: (item: DataType,index: number) => {this.itemView(item as number,index)},
         offsetXY: 200
       })
     }
@@ -37,10 +37,10 @@ struct ItemView{
     .width('80%')
     .height(200)
     .borderRadius(30)
-    .backgroundColor(Color.Green)
-    .shadow({
+    .backgroundColor(Color.Pink)
+    .border({
       color: Color.Black,
-      radius: 30
+      width: 2
     })
   }
 }
