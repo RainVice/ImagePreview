@@ -14,12 +14,12 @@ struct Index {
 
   @State names: Array<AnimPage> = [
     {name: '堆叠列表',page: 'pages/StackListView'},
+    {name: '图片预览',page: 'pages/ImagePreViewPage'},
 
   ]
 
   build() {
     Column() {
-
       Text("案例列表")
         .fontSize(50)
         .fontWeight(FontWeight.Bold)

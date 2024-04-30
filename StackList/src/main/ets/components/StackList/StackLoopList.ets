@@ -3,7 +3,7 @@ import { DataType } from '../../common/type'
 
 
 @Component
-export struct StackList {
+export struct StackLoopList {
   // 是否垂直
   isVertical: boolean = true
   // 缩放偏移量，每个 item 缩放递减

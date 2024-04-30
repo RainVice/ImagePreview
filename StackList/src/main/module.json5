@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "StackList",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet"
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 
-import { DataType, StackList} from '@rv/rvcomponent'
+import { DataType, StackLoopList} from '@rv/stack-loop-list'
 
 @Entry
 @Component
@@ -7,7 +7,7 @@ struct StackListView {
   @State datas: Array<number>  = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
   build() {
     Column(){
-      StackList({
+      StackLoopList({
         isVertical: true,
         datas: $datas,
         itemView: (item: DataType,index: number) => {this.itemView(item as number,index)},

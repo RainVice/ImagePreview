@@ -1,10 +1,11 @@
 {
   "module": {
-    "name": "library",
+    "name": "ImagePreview",
     "type": "har",
     "deviceTypes": [
       "default",
-      "tablet"
+      "tablet",
+      "2in1"
     ]
   }
 }

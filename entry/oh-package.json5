@@ -7,6 +7,7 @@
   "main": "",
   "version": "1.0.0",
   "dependencies": {
-    "@rv/rvcomponent": "file:../library"
+    "@rv/stack-loop-list": "file:../StackList",
+    "@rv/image-preview": "file:../ImagePreview"
   }
 }

@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/Index",
-    "pages/StackListView"
+    "pages/StackListView",
+    "pages/ImagePreViewPage"
   ]
 }

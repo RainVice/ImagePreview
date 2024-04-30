@@ -1,0 +1,11 @@
+{
+  "license": "MIT",
+  "devDependencies": {},
+  "author": "rainvice",
+  "name": "stack-loop-list",
+  "description": "支持循环堆叠列表，支持水平或垂直，以及样式变化",
+  "main": "index.ets",
+  "repository": "https://gitee.com/MUYS/rvcomponent",
+  "version": "1.0.0",
+  "dependencies": {}
+}
