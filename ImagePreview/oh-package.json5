@@ -2,10 +2,10 @@
   "license": "MIT",
   "devDependencies": {},
   "author": "rainvice",
-  "name": "image-preview",
+  "name": "@rv/image-preview",
   "description": "提供图片预览组件，支持旋转，缩放和平移，提供一些自定义属性",
-  "main": "index.ets",
+  "main": "Index.ets",
   "repository": "https://gitee.com/MUYS/rvcomponent",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {}
 }

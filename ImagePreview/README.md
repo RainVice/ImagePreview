@@ -14,10 +14,10 @@ image-preview 提供图片预览组件，支持旋转，缩放和平移，提供
 
 ## 属性列表
 
-| 属性名         | 类型            | 必须              | 默认值     | 描述          |
-|-------------|---------------|-----------------|---------|-------------|
-| `option`    | ImagePreViewOption | 是               | null    | 配置选项，集体如下介绍 |
-| `indicator` | DotIndicator \| DigitIndicator \| boolean | 否           | true | [见官方文档](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/ts-container-swiper-0000001862607461#ZH-CN_TOPIC_0000001862607461__indicator10) |
+| 属性名         | 类型                                              | 必须  | 默认值  | 描述                                                                                                                                                        |
+|-------------|-------------------------------------------------|-----|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `option`    | `ImagePreViewOption`                            | 是   | null | 配置选项，集体如下介绍                                                                                                                                               |
+| `indicator` | `DotIndicator` or `DigitIndicator` or `boolean` | 否   | true | [见官方文档](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/ts-container-swiper-0000001862607461#ZH-CN_TOPIC_0000001862607461__indicator10) |
 
 ## ImagePreViewOption
 
@@ -77,6 +77,10 @@ type ImageType = PixelMap | ResourceStr | DrawableDescriptor
    ```TS
    setMinScale(minScale: number)
    ```
+9. 设置共享元素过渡动画
+   ```typescript
+   setId(id: string)
+   ```
 
 ## 使用示例
 
@@ -84,33 +88,58 @@ type ImageType = PixelMap | ResourceStr | DrawableDescriptor
 import { ImagePreView, ImagePreViewOption } from '@rv/image-preview/Index'
 import { promptAction } from '@kit.ArkUI'
 
-@Entry
-@Component
-struct ImagePreViewPage {
-  @State images: ResourceStr[] = [
+@
+Entry
+@
+Component
+struct
+ImagePreViewPage
+{
+  @
+  State
+  images: ResourceStr[] = [
     $r('app.media.app_icon'),
     $r('app.media.app_icon'),
     $r('app.media.app_icon'),
     $r('app.media.app_icon'),
     $r('app.media.app_icon'),
   ]
-  @State imagePreViewOption: ImagePreViewOption = new ImagePreViewOption(this.images)
+  @
+  State
+  imagePreViewOption: ImagePreViewOption = new ImagePreViewOption(this.images)
 
-  aboutToAppear(): void {
-    this.imagePreViewOption.setLongPressListener(() => {
-      promptAction.showToast({ message: "1111" })
-    })
-    this.imagePreViewOption.setZoomEnabled(false)
-    this.imagePreViewOption.setMinScale(0.1)
-    this.imagePreViewOption.setShowIndex(2)
-    this.imagePreViewOption.setBackgroundColor(Color.White)
+  aboutToAppear():
+  void {
+    this
+    .
+    imagePreViewOption
+    .
+    setLongPressListener
+    (
+    (
+    )
+    =>
+    {
+    promptAction
+    .
+    showToast({ message: "1111" })
   }
-  build() {
-    Column() {
-      ImagePreView({ option: this.imagePreViewOption })
-    }.width("100%")
+  )
+  this.imagePreViewOption.setZoomEnabled(false)
+  this.imagePreViewOption.setMinScale(0.1)
+  this.imagePreViewOption.setShowIndex(2)
+  this.imagePreViewOption.setBackgroundColor(Color.White)
+}
+build()
+{
+  Column()
+  {
+    ImagePreView({ option: this.imagePreViewOption })
+  }
+  .
+  width("100%")
     .height("100%")
-  }
+}
 }
 ```
 
