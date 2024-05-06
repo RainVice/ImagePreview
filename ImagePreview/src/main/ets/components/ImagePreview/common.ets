@@ -195,20 +195,4 @@ export class ImagePreViewOption {
     return this.minScale
   }
 
-  /**
-   * 设置过渡动画id
-   * @param minScale
-   */
-  setId(id: string) {
-    this.id = id
-  }
-
-  /**
-   * 最小缩放比
-   * @param minScale
-   */
-  getId(): string {
-    return this.id as string
-  }
-
 }

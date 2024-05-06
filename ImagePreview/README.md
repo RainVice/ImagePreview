@@ -77,72 +77,93 @@ type ImageType = PixelMap | ResourceStr | DrawableDescriptor
    ```TS
    setMinScale(minScale: number)
    ```
-9. 设置共享元素过渡动画
-   ```typescript
-   setId(id: string)
-   ```
+   
+## 共享元素转场
+需要对你的图片列表加上: `.sharedTransition(JSON.stringify(item) + index)`，其中`item`是`Image组件`的`url`参数,
+`index`是当前`Image组件`所在的索引，如：
+```typescript
+ForEach(this.images, (item: ResourceStr, index: number) => {
+Image(item)
+  .width(100)
+  .height(100)
+  .margin(10)
+  .sharedTransition(JSON.stringify(item) + index)
+})
+```
 
 ## 使用示例
+列表页：
+```typescript
+import { router } from '@kit.ArkUI'
 
+@Entry
+@Component
+struct ImagePreViewPageIndex {
+   @State images: ResourceStr[] = [
+      $r('app.media.app_icon'),
+      $r('app.media.app_icon'),
+      $r('app.media.app_icon'),
+      $r('app.media.app_icon'),
+      $r('app.media.app_icon'),
+   ]
+
+   build() {
+      Row() {
+         Column() {
+            Flex({ wrap: FlexWrap.Wrap }) {
+               ForEach(this.images, (item: ResourceStr, index: number) => {
+                  Image(item)
+                     .width(100)
+                     .height(100)
+                     .margin(10)
+                     .sharedTransition(JSON.stringify(item) + index)
+                     .onClick(() => {
+                        router.pushUrl({
+                           url: 'pages/ImagePreViewPage',
+                           params: this.images
+                        })
+                     })
+
+               })
+            }
+         }
+         .width('100%')
+      }
+      .height('100%')
+   }
+}
+```
+预览页：
 ```typescript
 import { ImagePreView, ImagePreViewOption } from '@rv/image-preview/Index'
-import { promptAction } from '@kit.ArkUI'
+import { promptAction, router } from '@kit.ArkUI'
 
-@
-Entry
-@
-Component
-struct
-ImagePreViewPage
-{
-  @
-  State
-  images: ResourceStr[] = [
-    $r('app.media.app_icon'),
-    $r('app.media.app_icon'),
-    $r('app.media.app_icon'),
-    $r('app.media.app_icon'),
-    $r('app.media.app_icon'),
-  ]
-  @
-  State
-  imagePreViewOption: ImagePreViewOption = new ImagePreViewOption(this.images)
+@Entry
+@Component
+struct ImagePreViewPage {
+  images: ResourceStr[] = router.getParams() as ResourceStr[]
 
-  aboutToAppear():
-  void {
-    this
-    .
-    imagePreViewOption
-    .
-    setLongPressListener
-    (
-    (
-    )
-    =>
-    {
-    promptAction
-    .
-    showToast({ message: "1111" })
+  @State imagePreViewOption: ImagePreViewOption | null = null
+
+  aboutToAppear(): void {
+    this.imagePreViewOption = new ImagePreViewOption(this.images)
+    this.imagePreViewOption.setLongPressListener(() => {
+      promptAction.showToast({ message: "1111" })
+    })
+    this.imagePreViewOption.setRotateEnable(false)
+    this.imagePreViewOption.setMinScale(0.1)
+    this.imagePreViewOption.setShowIndex(1)
+    this.imagePreViewOption.setBackgroundColor(Color.White)
   }
-  )
-  this.imagePreViewOption.setZoomEnabled(false)
-  this.imagePreViewOption.setMinScale(0.1)
-  this.imagePreViewOption.setShowIndex(2)
-  this.imagePreViewOption.setBackgroundColor(Color.White)
-}
-build()
-{
-  Column()
-  {
-    ImagePreView({ option: this.imagePreViewOption })
-  }
-  .
-  width("100%")
+  build() {
+    Column() {
+      ImagePreView({ option: this.imagePreViewOption as ImagePreViewOption })
+    }.width("100%")
     .height("100%")
-}
+  }
 }
 ```
 
 效果如下：
-![](image/Screenshot_2024-04-30T221110.png)
-![](image/Screenshot_2024-04-30T221245.png)
+![Screenshot_2024-05-06T212737.png](src/image/Screenshot_2024-05-06T212737.png)
+![PixPin_2024-05-06_21-31-30.gif](src/image/PixPin_2024-05-06_21-31-30.gif)

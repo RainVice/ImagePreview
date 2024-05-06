@@ -15,9 +15,8 @@ struct ImagePreViewPage {
     })
     this.imagePreViewOption.setRotateEnable(false)
     this.imagePreViewOption.setMinScale(0.1)
-    this.imagePreViewOption.setShowIndex(2)
+    this.imagePreViewOption.setShowIndex(1)
     this.imagePreViewOption.setBackgroundColor(Color.White)
-    this.imagePreViewOption.setId("0")
   }
   build() {
     Column() {

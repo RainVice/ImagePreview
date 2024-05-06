@@ -9,7 +9,7 @@ export struct ImageItem {
   @Prop rotateEnable: boolean
   @Prop maxScale: number
   @Prop minScale: number
-  @Prop sharedId: string
+  @Prop index: number
   @State private currentScaleValue: number = 1
   @State private preScaleValue: number = 1
   @State private centerX: number | string = "50%"
@@ -46,7 +46,9 @@ export struct ImageItem {
             .rotate({
               angle: this.currentAngle
             })
-            .sharedTransition(this.sharedId)
+            .sharedTransition(JSON.stringify(this.image) + this.index,{
+              duration: 300
+            })
             .width("100%")
 
       }
