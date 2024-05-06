@@ -61,6 +61,13 @@ export class ImagePreViewOption {
    * 是否可以旋转
    */
   private rotateEnable: boolean = true
+
+  /**
+   * 过渡动画ID
+   */
+  private id:string | undefined = undefined
+
+
   /**
    * 长按事件
    */
@@ -187,4 +194,21 @@ export class ImagePreViewOption {
   getMinScale(): number {
     return this.minScale
   }
+
+  /**
+   * 设置过渡动画id
+   * @param minScale
+   */
+  setId(id: string) {
+    this.id = id
+  }
+
+  /**
+   * 最小缩放比
+   * @param minScale
+   */
+  getId(): string {
+    return this.id as string
+  }
+
 }

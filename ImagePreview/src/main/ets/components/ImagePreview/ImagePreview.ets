@@ -20,6 +20,7 @@ export struct ImagePreView {
               rotateEnable: this.option.getRotateEnable(),
               maxScale: this.option.getMaxScale(),
               minScale: this.option.getMinScale(),
+              sharedId: this.option.getId()
             })
               .gesture(
                 LongPressGesture().onAction(this.option.getLongPressListener())

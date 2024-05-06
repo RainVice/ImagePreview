@@ -14,8 +14,7 @@ struct Index {
 
   @State names: Array<AnimPage> = [
     {name: '堆叠列表',page: 'pages/StackListView'},
-    {name: '图片预览',page: 'pages/ImagePreViewPage'},
-
+    {name: '图片预览',page: 'pages/ImagePreViewPageIndex'},
   ]
 
   build() {

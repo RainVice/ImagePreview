@@ -9,6 +9,7 @@ export struct ImageItem {
   @Prop rotateEnable: boolean
   @Prop maxScale: number
   @Prop minScale: number
+  @Prop sharedId: string
   @State private currentScaleValue: number = 1
   @State private preScaleValue: number = 1
   @State private centerX: number | string = "50%"
@@ -26,30 +27,30 @@ export struct ImageItem {
   private animatorResultX: AnimatorResult | undefined = undefined
   private animatorResultAngle: AnimatorResult | undefined = undefined
 
-  aboutToAppear(): void {
-    const aa = this.zoomEnabled
-    return
-  }
 
   build() {
     if (this.image) {
       Column() {
-        Image(this.image)
-          .objectFit(ImageFit.Contain)
-          .offset({
-            x: this.currentOffsetX,
-            y: this.currentOffsetY,
-          })
-          .scale({
-            x: this.currentScaleValue,
-            y: this.currentScaleValue,
-            centerX: this.centerX,
-            centerY: this.centerY,
-          })
-          .rotate({
-            angle: this.currentAngle
-          })
+          Image(this.image)
+            .objectFit(ImageFit.Contain)
+            .offset({
+              x: this.currentOffsetX,
+              y: this.currentOffsetY,
+            })
+            .scale({
+              x: this.currentScaleValue,
+              y: this.currentScaleValue,
+              centerX: this.centerX,
+              centerY: this.centerY,
+            })
+            .rotate({
+              angle: this.currentAngle
+            })
+            .sharedTransition(this.sharedId)
+            .width("100%")
+
       }
+      .justifyContent(FlexAlign.Center)
       .width("100%")
       .height("100%")
       .onAreaChange((oldValue: Area, newValue: Area) => {
