@@ -1,9 +1,6 @@
 # rvcomponent
 ## 简介
-rvcomponent 是一款基于ArkUI的组件库，可以在Harmony OS 或者 OpenHarmony OS 上使用。目前实现：
-- 循环堆叠列表
-## 下载安装
-`ohpm install @ohos/axios`
+rvcomponent 是一款基于ArkUI的组件库，可以在Harmony OS 或者 OpenHarmony OS 上使用。
 ## 权限
 无需权限
 ## 属性列表
