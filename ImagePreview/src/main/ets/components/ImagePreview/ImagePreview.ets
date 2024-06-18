@@ -20,14 +20,10 @@ export struct ImagePreView {
               rotateEnable: this.option.getRotateEnable(),
               maxScale: this.option.getMaxScale(),
               minScale: this.option.getMinScale(),
+              onClickEvent: this.option.getOnClickListener(),
+              longPressListener: this.option.getLongPressListener(),
               index: index
             })
-              .gesture(
-                LongPressGesture().onAction(this.option.getLongPressListener())
-              )
-              .onClick(() => {
-                router.back()
-              })
           })
         }
         .indicator(this.indicator)

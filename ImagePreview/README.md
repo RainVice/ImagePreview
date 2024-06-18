@@ -44,39 +44,61 @@ type ImageType = PixelMap | ResourceStr | DrawableDescriptor
 
 3. 设置缓存数量
 
-   ```ts
+   ```typescript
    setCachedCount(cachedCount: number)
    ```
 
 4. 设置长按事件
 
-   ```ts
-   setLongPressListener(event: () => void)
+   ```typescript
+   /**
+   * 设置长按事件
+   * @param event 事件回调函数
+   *    其中：
+   *      event: GestureEvent，与手势事件一致
+   *      index: 当前长按的图片索引
+   */
+   setLongPressListener(event: (event: GestureEvent, index: number) => void) 
    ```
 
 5. 允许缩放
 
-   ```ts
+   ```typescript
    setZoomEnabled(zoomEnabled: boolean)
    ```
 
 6. 是否允许拖拽
 
-   ```ts
+   ```typescript
    setPanEnabled(panEnabled: boolean)
    ```
 
 7. 最大缩放比
 
-   ```ts
+   ```typescript
    setMaxScale(maxScale: number)
    ```
 
 8. 最小缩放比
 
-   ```TS
+   ```typescript
    setMinScale(minScale: number)
    ```
+
+9. 设置单击事件
+   ```typescript
+   /**
+   * 设置单击事件
+   * @param event 事件回调函数
+   *    其中：
+   *      event: ClickEvent，与点击事件一致
+   *      index: 当前点击的图片索引
+   */
+   setOnClickListener(event: (event: ClickEvent, index: number) => void) {
+   this.onClickListener = event
+   }
+   ```
+
    
 ## 共享元素转场
 需要对你的图片列表加上: `.sharedTransition(JSON.stringify(item) + index)`，其中`item`是`Image组件`的`url`参数,

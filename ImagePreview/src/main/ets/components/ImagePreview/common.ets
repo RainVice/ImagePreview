@@ -61,17 +61,19 @@ export class ImagePreViewOption {
    * 是否可以旋转
    */
   private rotateEnable: boolean = true
-
   /**
    * 过渡动画ID
    */
-  private id:string | undefined = undefined
-
-
+  private id: string | undefined = undefined
   /**
    * 长按事件
    */
-  private longPressListener: () => void = () => {
+  private longPressListener: (event: GestureEvent, index: number) => void = () => {
+  }
+  /**
+   * 单击事件
+   */
+  private onClickListener: (event: ClickEvent, index: number) => void = () => {
   }
 
   /**
@@ -124,15 +126,35 @@ export class ImagePreViewOption {
 
   /**
    * 设置长按事件
-   * @param event 事件
+   * @param event 事件回调函数
+   *    其中：
+   *      event: GestureEvent，与手势事件一致
+   *      index: 当前长按的图片索引
    */
-  setLongPressListener(event: () => void) {
+  setLongPressListener(event: (event: GestureEvent, index: number) => void) {
     this.longPressListener = event
   }
 
-  getLongPressListener(): () => void {
+  getLongPressListener(): (event: GestureEvent, index: number) => void {
     return this.longPressListener
   }
+
+
+  /**
+   * 设置单击事件
+   * @param event 事件回调函数
+   *    其中：
+   *      event: ClickEvent，与点击事件一致
+   *      index: 当前点击的图片索引
+   */
+  setOnClickListener(event: (event: ClickEvent, index: number) => void) {
+    this.onClickListener = event
+  }
+
+  getOnClickListener(): (event: ClickEvent, index: number) => void {
+    return this.onClickListener
+  }
+
 
   /**
    * 允许缩放
@@ -194,5 +216,4 @@ export class ImagePreViewOption {
   getMinScale(): number {
     return this.minScale
   }
-
 }

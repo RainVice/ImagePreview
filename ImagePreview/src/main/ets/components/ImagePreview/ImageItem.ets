@@ -10,6 +10,10 @@ export struct ImageItem {
   @Prop maxScale: number
   @Prop minScale: number
   @Prop index: number
+  onClickEvent: (event: ClickEvent, index: number) => void = () => {
+  }
+  longPressListener: (event: GestureEvent, index: number) => void = () => {
+  }
   @State private currentScaleValue: number = 1
   @State private preScaleValue: number = 1
   @State private centerX: number | string = "50%"
@@ -27,29 +31,37 @@ export struct ImageItem {
   private animatorResultX: AnimatorResult | undefined = undefined
   private animatorResultAngle: AnimatorResult | undefined = undefined
 
-
   build() {
     if (this.image) {
       Column() {
-          Image(this.image)
-            .objectFit(ImageFit.Contain)
-            .offset({
-              x: this.currentOffsetX,
-              y: this.currentOffsetY,
+        Image(this.image)
+          .draggable(false)
+          .objectFit(ImageFit.Contain)
+          .offset({
+            x: this.currentOffsetX,
+            y: this.currentOffsetY,
+          })
+          .scale({
+            x: this.currentScaleValue,
+            y: this.currentScaleValue,
+            centerX: this.centerX,
+            centerY: this.centerY,
+          })
+          .rotate({
+            angle: this.currentAngle
+          })
+          .sharedTransition(JSON.stringify(this.image) + this.index, {
+            duration: 300
+          })
+          .width("100%")
+          .gesture(
+            LongPressGesture().onAction((event: GestureEvent) => {
+              this.longPressListener(event, this.index)
             })
-            .scale({
-              x: this.currentScaleValue,
-              y: this.currentScaleValue,
-              centerX: this.centerX,
-              centerY: this.centerY,
-            })
-            .rotate({
-              angle: this.currentAngle
-            })
-            .sharedTransition(JSON.stringify(this.image) + this.index,{
-              duration: 300
-            })
-            .width("100%")
+          )
+          .onClick((event) => {
+            this.onClickEvent(event, this.index)
+          })
 
       }
       .justifyContent(FlexAlign.Center)
@@ -131,7 +143,8 @@ export struct ImageItem {
               this.currentOffsetY = this.preOffsetY + event.offsetY
             })
             .onActionEnd((event: GestureEvent) => {
-              if (Math.abs(this.currentOffsetX) > this.parentWidth / 2 || Math.abs(this.currentOffsetY) > this.parentHeight / 2) {
+              if (Math.abs(this.currentOffsetX) > this.parentWidth / 2 ||
+                Math.abs(this.currentOffsetY) > this.parentHeight / 2) {
 
                 this.centerX = "50%"
                 this.centerY = "50%"
