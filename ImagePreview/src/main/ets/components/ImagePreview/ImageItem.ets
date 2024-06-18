@@ -90,7 +90,7 @@ export struct ImageItem {
                   end: this.minScale
                 };
                 this.animatorResultScale = animator.create(options)
-                this.animatorResultScale.onframe = (num: number) => {
+                this.animatorResultScale.onFrame = (num: number) => {
                   this.currentScaleValue = num
                 }
                 this.animatorResultScale.play()
@@ -107,7 +107,7 @@ export struct ImageItem {
                   end: this.maxScale
                 };
                 this.animatorResultScale = animator.create(options)
-                this.animatorResultScale.onframe = (num: number) => {
+                this.animatorResultScale.onFrame = (num: number) => {
                   this.currentScaleValue = num
                 }
                 this.animatorResultScale.play()
@@ -147,7 +147,7 @@ export struct ImageItem {
                   end: 0
                 };
                 this.animatorResultX = animator.create(optionsX)
-                this.animatorResultX.onframe = (num: number) => {
+                this.animatorResultX.onFrame = (num: number) => {
                   this.currentOffsetX = num
                 }
                 this.animatorResultX.play()
@@ -163,7 +163,7 @@ export struct ImageItem {
                   end: 0
                 };
                 this.animatorResultY = animator.create(optionsY)
-                this.animatorResultY.onframe = (num: number) => {
+                this.animatorResultY.onFrame = (num: number) => {
                   this.currentOffsetY = num
                 }
                 this.animatorResultY.play()
@@ -196,7 +196,7 @@ export struct ImageItem {
                 end: Math.floor(this.currentAngle / 90) * 90
               };
               this.animatorResultAngle = animator.create(options)
-              this.animatorResultAngle.onframe = (num: number) => {
+              this.animatorResultAngle.onFrame = (num: number) => {
                 this.currentAngle = num
               }
               this.animatorResultAngle.play()
@@ -216,7 +216,7 @@ export struct ImageItem {
                 end: 1
               };
               this.animatorResultScale = animator.create(optionsScale)
-              this.animatorResultScale.onframe = (num: number) => {
+              this.animatorResultScale.onFrame = (num: number) => {
                 this.currentScaleValue = num
               }
               this.animatorResultScale.play()
@@ -232,7 +232,7 @@ export struct ImageItem {
                 end: Math.floor(this.currentAngle / 90) * 90
               };
               this.animatorResultAngle = animator.create(optionsAngle)
-              this.animatorResultAngle.onframe = (num: number) => {
+              this.animatorResultAngle.onFrame = (num: number) => {
                 this.currentAngle = num
               }
               this.animatorResultAngle.play()
@@ -251,7 +251,7 @@ export struct ImageItem {
                 end: 0
               };
               this.animatorResultX = animator.create(optionsX)
-              this.animatorResultX.onframe = (num: number) => {
+              this.animatorResultX.onFrame = (num: number) => {
                 this.currentOffsetX = num
               }
               this.animatorResultX.play()
@@ -267,7 +267,7 @@ export struct ImageItem {
                 end: 0
               };
               this.animatorResultY = animator.create(optionsY)
-              this.animatorResultY.onframe = (num: number) => {
+              this.animatorResultY.onFrame = (num: number) => {
                 this.currentOffsetY = num
               }
               this.animatorResultY.play()
