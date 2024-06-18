@@ -15,10 +15,11 @@ struct ImagePreViewPage {
     this.imagePreViewOption.setOnClickListener((_,index) => {
       promptAction.showToast({ message: index.toString() })
     })
-    this.imagePreViewOption.setRotateEnable(false)
+    // this.imagePreViewOption.setRotateEnable(false)
     this.imagePreViewOption.setMinScale(0.1)
     this.imagePreViewOption.setShowIndex(1)
     this.imagePreViewOption.setBackgroundColor(Color.White)
+    // this.imagePreViewOption.setZoomEnabled(false)
   }
 
   build() {

@@ -31,6 +31,12 @@ export struct ImageItem {
   private animatorResultX: AnimatorResult | undefined = undefined
   private animatorResultAngle: AnimatorResult | undefined = undefined
 
+  // 单击是否触发
+  private isClick: boolean = false
+
+  // 计时器id
+  private timeroutId: number = 0
+
   build() {
     if (this.image) {
       Column() {
@@ -48,22 +54,29 @@ export struct ImageItem {
             centerY: this.centerY,
           })
           .rotate({
-            angle: this.currentAngle
+            angle: this.currentAngle,
+            // todo 待实现
+            // centerX: this.centerX,
+            // centerY: this.centerY,
           })
           .sharedTransition(JSON.stringify(this.image) + this.index, {
             duration: 300
           })
           .width("100%")
-          .gesture(
-            LongPressGesture().onAction((event: GestureEvent) => {
-              this.longPressListener(event, this.index)
-            })
-          )
-          .onClick((event) => {
-            this.onClickEvent(event, this.index)
-          })
-
       }
+      .onClick((event) => {
+        if (this.isClick) {
+          this.isClick = false
+          clearTimeout(this.timeroutId)
+          this.doubleClick(event)
+        }else{
+          this.isClick = true
+          this.timeroutId = setTimeout(() => {
+            this.isClick = false
+            this.onClickEvent(event, this.index)
+          },300)
+        }
+      })
       .justifyContent(FlexAlign.Center)
       .width("100%")
       .height("100%")
@@ -75,6 +88,9 @@ export struct ImageItem {
         GestureGroup(GestureMode.Parallel,
           PinchGesture()
             .onActionStart((event: GestureEvent) => {
+              // todo 待优化
+              this.centerX = event.pinchCenterX
+              this.centerY = event.pinchCenterY
               this.animatorResultScale?.cancel()
               this.animatorResultY?.cancel()
               this.animatorResultX?.cancel()
@@ -185,6 +201,9 @@ export struct ImageItem {
 
           RotationGesture()
             .onActionStart((event: GestureEvent) => {
+              // todo 待优化
+              this.centerX = event.pinchCenterX
+              this.centerY = event.pinchCenterY
               this.animatorResultScale?.cancel()
               this.animatorResultY?.cancel()
               this.animatorResultX?.cancel()
@@ -215,9 +234,15 @@ export struct ImageItem {
               this.animatorResultAngle.play()
             }),
 
-          TapGesture({ count: 2 })
-            .onAction((event: GestureEvent) => {
+          LongPressGesture().onAction((event: GestureEvent) => {
+            this.longPressListener(event, this.index)
+          }),
 
+          TapGesture({ count: 2,fingers: 2 })
+            .onAction((event: GestureEvent) => {
+              // todo 待优化
+              // this.centerX = "50%"
+              // this.centerY = "50%"
               const optionsScale: AnimatorOptions = {
                 duration: 300,
                 easing: "linear",
@@ -233,7 +258,6 @@ export struct ImageItem {
                 this.currentScaleValue = num
               }
               this.animatorResultScale.play()
-
               const optionsAngle: AnimatorOptions = {
                 duration: 300,
                 easing: "linear",
@@ -242,17 +266,13 @@ export struct ImageItem {
                 direction: "normal",
                 iterations: 1,
                 begin: this.currentAngle,
-                end: Math.floor(this.currentAngle / 90) * 90
+                end: 0
               };
               this.animatorResultAngle = animator.create(optionsAngle)
               this.animatorResultAngle.onFrame = (num: number) => {
                 this.currentAngle = num
               }
               this.animatorResultAngle.play()
-
-              this.centerX = "50%"
-              this.centerY = "50%"
-
               const optionsX: AnimatorOptions = {
                 duration: 300,
                 easing: "linear",
@@ -268,7 +288,6 @@ export struct ImageItem {
                 this.currentOffsetX = num
               }
               this.animatorResultX.play()
-
               const optionsY: AnimatorOptions = {
                 duration: 300,
                 easing: "linear",
@@ -284,13 +303,53 @@ export struct ImageItem {
                 this.currentOffsetY = num
               }
               this.animatorResultY.play()
-
-
             })
-
         )
       )
       .clip(true)
     }
   }
+
+  doubleClick(event: ClickEvent) {
+
+    // todo 待优化
+    this.centerX = event.x
+    this.centerY = event.y
+
+    if (this.currentScaleValue === 1){
+      const optionsScale: AnimatorOptions = {
+        duration: 300,
+        easing: "linear",
+        delay: 0,
+        fill: "forwards",
+        direction: "normal",
+        iterations: 1,
+        begin: this.currentScaleValue,
+        end: this.maxScale
+      };
+      this.animatorResultScale = animator.create(optionsScale)
+      this.animatorResultScale.onFrame = (num: number) => {
+        this.currentScaleValue = num
+      }
+      this.animatorResultScale.play()
+    }else{
+      const optionsScale: AnimatorOptions = {
+        duration: 300,
+        easing: "linear",
+        delay: 0,
+        fill: "forwards",
+        direction: "normal",
+        iterations: 1,
+        begin: this.currentScaleValue,
+        end: 1
+      };
+      this.animatorResultScale = animator.create(optionsScale)
+      this.animatorResultScale.onFrame = (num: number) => {
+        this.currentScaleValue = num
+      }
+      this.animatorResultScale.play()
+    }
+
+  }
+
 }

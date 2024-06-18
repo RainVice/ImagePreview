@@ -1,6 +1,5 @@
 import { Adapter, ImagePreViewOption, ImageType } from './common'
 import { ImageItem } from './ImageItem'
-import { router } from '@kit.ArkUI'
 
 @Component
 export struct ImagePreView {
