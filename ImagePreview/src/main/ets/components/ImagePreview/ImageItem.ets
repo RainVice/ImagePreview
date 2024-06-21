@@ -16,8 +16,10 @@ export struct ImageItem {
   }
   @State private currentScaleValue: number = 1
   @State private preScaleValue: number = 1
-  @State private centerX: number | string = "50%"
-  @State private centerY: number | string = "50%"
+  @State private scaleCenterX: number | string = "50%"
+  @State private scaleCenterY: number | string = "50%"
+  @State private rotateCenterX: number | string = 0
+  @State private rotateCenterY: number | string = 0
   @State private currentOffsetX: number = 0
   @State private currentOffsetY: number = 0
   @State private preOffsetX: number = 0
@@ -50,14 +52,14 @@ export struct ImageItem {
           .scale({
             x: this.currentScaleValue,
             y: this.currentScaleValue,
-            centerX: this.centerX,
-            centerY: this.centerY,
+            centerX: this.scaleCenterX,
+            centerY: this.scaleCenterY,
           })
           .rotate({
             angle: this.currentAngle,
             // todo 待实现
-            // centerX: this.centerX,
-            // centerY: this.centerY,
+            // centerX: this.rotateCenterX,
+            // centerY: this.rotateCenterY,
           })
           .sharedTransition(JSON.stringify(this.image) + this.index, {
             duration: 300
@@ -89,8 +91,8 @@ export struct ImageItem {
           PinchGesture()
             .onActionStart((event: GestureEvent) => {
               // todo 待优化
-              this.centerX = event.pinchCenterX
-              this.centerY = event.pinchCenterY
+              this.scaleCenterX = event.pinchCenterX
+              this.scaleCenterY = event.pinchCenterY
               this.animatorResultScale?.cancel()
               this.animatorResultY?.cancel()
               this.animatorResultX?.cancel()
@@ -102,8 +104,8 @@ export struct ImageItem {
                 return
               }
               this.currentScaleValue = this.preScaleValue + event.scale - 1
-              this.centerX = event.pinchCenterX
-              this.centerY = event.pinchCenterY
+              this.scaleCenterX = event.pinchCenterX
+              this.scaleCenterY = event.pinchCenterY
             })
             .onActionEnd((event: GestureEvent) => {
               if (this.currentScaleValue < this.minScale) {
@@ -162,8 +164,8 @@ export struct ImageItem {
               if (Math.abs(this.currentOffsetX) > this.parentWidth / 2 ||
                 Math.abs(this.currentOffsetY) > this.parentHeight / 2) {
 
-                this.centerX = "50%"
-                this.centerY = "50%"
+                this.scaleCenterX = "50%"
+                this.scaleCenterY = "50%"
 
                 const optionsX: AnimatorOptions = {
                   duration: 300,
@@ -202,8 +204,8 @@ export struct ImageItem {
           RotationGesture()
             .onActionStart((event: GestureEvent) => {
               // todo 待优化
-              this.centerX = event.pinchCenterX
-              this.centerY = event.pinchCenterY
+              this.rotateCenterX = event.pinchCenterX
+              this.rotateCenterY = event.pinchCenterY
               this.animatorResultScale?.cancel()
               this.animatorResultY?.cancel()
               this.animatorResultX?.cancel()
@@ -313,8 +315,8 @@ export struct ImageItem {
   doubleClick(event: ClickEvent) {
 
     // todo 待优化
-    this.centerX = event.x
-    this.centerY = event.y
+    this.scaleCenterX = event.x
+    this.scaleCenterY = event.y
 
     if (this.currentScaleValue === 1){
       const optionsScale: AnimatorOptions = {

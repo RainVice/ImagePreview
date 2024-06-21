@@ -92,8 +92,9 @@ export class ImagePreViewOption {
    * 设置背景颜色
    * @param bgColor 背景颜色
    */
-  setBackgroundColor(bgColor: ResourceColor) {
+  setBackgroundColor(bgColor: ResourceColor): ImagePreViewOption {
     this.bgColor = bgColor
+    return this
   }
 
   getBackgroundColor(): ResourceColor {
@@ -104,8 +105,9 @@ export class ImagePreViewOption {
    * 设置展示页
    * @param showIndex 索引
    */
-  setShowIndex(showIndex: number) {
+  setShowIndex(showIndex: number): ImagePreViewOption {
     this.showIndex = showIndex
+    return this
   }
 
   getShowIndex(): number {
@@ -116,8 +118,9 @@ export class ImagePreViewOption {
    * 设置缓存数量
    * @param cachedCount 缓存数量
    */
-  setCachedCount(cachedCount: number) {
+  setCachedCount(cachedCount: number): ImagePreViewOption {
     this.cachedCount = cachedCount
+    return this
   }
 
   getCachedCount(): number {
@@ -131,8 +134,9 @@ export class ImagePreViewOption {
    *      event: GestureEvent，与手势事件一致
    *      index: 当前长按的图片索引
    */
-  setLongPressListener(event: (event: GestureEvent, index: number) => void) {
+  setLongPressListener(event: (event: GestureEvent, index: number) => void): ImagePreViewOption {
     this.longPressListener = event
+    return this
   }
 
   getLongPressListener(): (event: GestureEvent, index: number) => void {
@@ -147,8 +151,9 @@ export class ImagePreViewOption {
    *      event: ClickEvent，与点击事件一致
    *      index: 当前点击的图片索引
    */
-  setOnClickListener(event: (event: ClickEvent, index: number) => void) {
+  setOnClickListener(event: (event: ClickEvent, index: number) => void): ImagePreViewOption {
     this.onClickListener = event
+    return this
   }
 
   getOnClickListener(): (event: ClickEvent, index: number) => void {
@@ -160,8 +165,9 @@ export class ImagePreViewOption {
    * 允许缩放
    * @param zoomEnabled
    */
-  setZoomEnabled(zoomEnabled: boolean) {
+  setZoomEnabled(zoomEnabled: boolean): ImagePreViewOption {
     this.zoomEnabled = zoomEnabled
+    return this
   }
 
   getZoomEnabled(): boolean {
@@ -172,8 +178,9 @@ export class ImagePreViewOption {
    * 是否允许拖拽
    * @param panEnabled
    */
-  setPanEnabled(panEnabled: boolean) {
+  setPanEnabled(panEnabled: boolean): ImagePreViewOption {
     this.panEnabled = panEnabled
+    return this
   }
 
   getPanEnabled(): boolean {
@@ -185,8 +192,9 @@ export class ImagePreViewOption {
    * @param rotateEnable
    * @returns
    */
-  setRotateEnable(rotateEnable: boolean) {
-    return this.rotateEnable = rotateEnable
+  setRotateEnable(rotateEnable: boolean): ImagePreViewOption {
+    this.rotateEnable = rotateEnable
+    return this
   }
 
   getRotateEnable(): boolean {
@@ -197,8 +205,9 @@ export class ImagePreViewOption {
    * 最大缩放比
    * @param maxScale
    */
-  setMaxScale(maxScale: number) {
+  setMaxScale(maxScale: number): ImagePreViewOption {
     this.maxScale = maxScale
+    return this
   }
 
   getMaxScale(): number {
@@ -209,8 +218,9 @@ export class ImagePreViewOption {
    * 最小缩放比
    * @param minScale
    */
-  setMinScale(minScale: number) {
+  setMinScale(minScale: number): ImagePreViewOption {
     this.minScale = minScale
+    return this
   }
 
   getMinScale(): number {
