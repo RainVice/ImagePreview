@@ -1,0 +1,13 @@
+{
+  "license": "MIT",
+  "devDependencies": {},
+  "keywords": ["图片预览","预览"],
+  "author": "rainvice",
+  "name": "@rv/image-preview",
+  "description": "提供图片预览组件，支持缩放和平移，提供一些自定义属性",
+  "main": "Index.ets",
+  "homepage": "https://gitee.com/MUYS/",
+  "repository": "https://gitee.com/MUYS/ImagePreview",
+  "version": "1.0.9",
+  "dependencies": {}
+}
