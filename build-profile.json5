@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Rainvice\\.ohos\\config\\default_imagePreview_XPIhiLMZZiIhwwnJc7REFPl4F6__xCD1zk0zqcLy7Z0=.cer",
+          "storePassword": "0000001A62C5AA4CFC58A295E78E9645425AD57C71473B9B89BE10CD136AEC294C243CB59913788EF963",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001A9DED3177610F3D8D1C4173C67B8B1098993C262B2C9782E8C0D5040970C37956FD11D4A04CE1",
+          "profile": "C:\\Users\\Rainvice\\.ohos\\config\\default_imagePreview_XPIhiLMZZiIhwwnJc7REFPl4F6__xCD1zk0zqcLy7Z0=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Rainvice\\.ohos\\config\\default_imagePreview_XPIhiLMZZiIhwwnJc7REFPl4F6__xCD1zk0zqcLy7Z0=.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",

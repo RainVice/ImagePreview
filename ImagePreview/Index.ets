@@ -4,4 +4,6 @@ export { ImageItem as OneImagePreview } from "./src/main/ets/components/ImageIte
 
 export * from "./src/main/ets/utils/common";
 
+export * from "./src/main/ets/model/IndicatorStyle";
+
 export * from "./src/main/ets/utils/ImagePreviewController";

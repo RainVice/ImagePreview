@@ -2,14 +2,17 @@ import { ImageType } from "../utils/common"
 import { ImageAnimUtil } from "../utils/ImageAnimUtil"
 import { ImagePreviewController } from "../utils/ImagePreviewController"
 import { ImageItemViewModel } from "../viewmodel/ImageItemViewModel"
+import { ImagePreviewViewModel } from "../viewmodel/ImagePreviewViewModel"
 
 @Component
 export struct ImageItem {
   private readonly viewModel: ImageItemViewModel = new ImageItemViewModel()
   @Prop @Require image: ImageType
-  @Prop @Watch('reset') currentPage: number
+  @Prop @Require @Watch('reset') currentPage: number
+  @Prop @Require currentScrollPage: number
   index: number = 0
   controller?: ImagePreviewController
+  previewViewModel?: ImagePreviewViewModel
 
   aboutToAppear(): void {
     this.viewModel.max_scale_ratio = this.controller?.maxScale ?? ImageItemViewModel.DEFAULT_MAX_SCALE_RATIO
@@ -25,6 +28,7 @@ export struct ImageItem {
           centerY: 0
         })
         .offset({ x: this.viewModel.offsetX, y: this.viewModel.offsetY })
+        .autoResize(this.controller?.isAutoResize)
         .objectFit(ImageFit.Contain)
         .onComplete(event => {
           this.viewModel.imageWidth = px2vp(event?.width as number)
@@ -33,6 +37,10 @@ export struct ImageItem {
         .onSizeChange((_: SizeOptions, newValue: SizeOptions) => {
           this.viewModel.imgComponentHeight = newValue.height as number
           this.viewModel.imgComponentWidth = newValue.width as number
+        })
+        .onVisibleAreaChange([0,1], (isVisible: boolean, currentRatio: number) => {
+          this.viewModel.defaultOffsetY = this.viewModel.getTopBoundary()
+          this.viewModel.refreshOffsetY(this.viewModel.defaultOffsetY)
         })
         .aspectRatio(this.viewModel.imageRatio)
         .geometryTransition(this.controller?.transitionIdGenerator?.(this.image, this.index))
@@ -135,8 +143,8 @@ export struct ImageItem {
 
   // 惯性翻页
   private inertiaFlip(velocityX: number) {
-    if ((this.viewModel.isLeftBoundary && velocityX < 0) || (this.viewModel.isRightBoundary && velocityX > 0)) {
-      this.controller?.listScroller?.fling(velocityX * this.viewModel.scaleRatio)
+    if ((this.viewModel.isLeftBoundary && velocityX > 0) || (this.viewModel.isRightBoundary && velocityX < 0)) {
+      this.controller?.listScroller?.fling(velocityX * this.viewModel.scaleRatio * this.viewModel.max_scale_ratio)
     }
   }
 
@@ -153,7 +161,7 @@ export struct ImageItem {
         / this.viewModel.previewWidth)
       const scaleRatioDown = 1 - event.offsetY / this.viewModel.previewHeight
       this.viewModel.scaleRatioDown = scaleRatioDown
-      this.controller?.setBgOpacity(scaleRatioDown)
+      this.setBgOpacity(scaleRatioDown)
     }
   }
 
@@ -170,7 +178,13 @@ export struct ImageItem {
       this.viewModel.offsetY = this.viewModel.preOffsetY
       this.viewModel.refreshCenterXDown(0.5)
       this.viewModel.scaleRatioDown = 1
-      this.controller?.setBgOpacity(1)
+      this.setBgOpacity(1)
+    }
+  }
+
+  private setBgOpacity(opacity: number) {
+    if (this.previewViewModel) {
+      this.previewViewModel.bgOpacity = opacity
     }
   }
 

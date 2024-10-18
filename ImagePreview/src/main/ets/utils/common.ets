@@ -32,3 +32,18 @@ export type TransitionIdGeneratorCallback = (image: ImageType, index: number) =>
  * 图片自定义解析
  */
 export type ImgParserCallBack = (image: ImageType, index: number) => ImageType
+
+export class CustomIndicatorParam {
+  currentPage: number = -1
+  totalCount: number = 0
+}
+
+/**
+ * 自定义指示器
+ */
+export type CustomIndicatorBuilder = ($$: CustomIndicatorParam) => void
+
+/**
+ * 指示器
+ */
+export type IndicatorItemBuilder = () => void

@@ -1,3 +1,4 @@
+import { DigitalIndicatorStyle, DotIndicatorStyle, IndicatorStyle, IndicatorType } from "../model/IndicatorStyle";
 import {
   ImageType,
   ImgClickCallback,
@@ -8,7 +9,6 @@ import {
   TransitionIdGeneratorCallback
 } from "./common";
 import { ImageDataSource } from "./ImageDataSource";
-import { util } from "@kit.ArkTS";
 
 @ObservedV2
 export class ImagePreviewController {
@@ -24,18 +24,28 @@ export class ImagePreviewController {
     return this._listScroller
   }
 
+  constructor(images?: ImageType[]){
+    if (images) {
+      this.setImage(images)
+    }
+  }
+
   // 背景色
   @Trace bgColor: ResourceColor = Color.Transparent
-  // 透明度
-  @Trace bgOpacity: number = 1
   // 缓存数量
   @Trace cachedCount: number = 3
-  // 当前页码
-  @Trace currentPage: number = 0
+  // 设置图片解码过程中是否对图源自动缩放
+  @Trace isAutoResize: boolean = false
+  // 指示器样式
+  @Trace indicatorStyle?: DigitalIndicatorStyle | DotIndicatorStyle | IndicatorStyle
+  // 指示器类型
+  indicatorType: IndicatorType = IndicatorType.DIGITAL
+  // 当前页码，不向外提供修改
+  currentPage: number = 0
+  // 滚动过程中处于哪一页，不向外提供修改
+  currentScrollPage: number = 0;
   // 展示第几页
   initialIndex: number = 0
-  // 滚动过程中处于哪一页
-  currentScrollPage: number = 0;
   // 最大缩放比例
   maxScale: number = 5
   // 长按事件
@@ -49,7 +59,8 @@ export class ImagePreviewController {
   // 即将翻页事件
   onWillFlip?: ImgFlipCallback
   // 共享元素专场id生成策略
-  transitionIdGenerator?: TransitionIdGeneratorCallback =(image: ImageType, index: number) => `${image.toString()}${index}`
+  transitionIdGenerator?: TransitionIdGeneratorCallback =
+    (image: ImageType, index: number) => `${image.toString()}${index}`
 
   /**
    * 设置图片数据
@@ -111,16 +122,6 @@ export class ImagePreviewController {
    */
   setBgColor(color: ResourceColor) {
     this.bgColor = color
-    return this
-  }
-
-  /**
-   * 设置背景透明度（不想外提供，设置无效,默认为1，接入状态管理）
-   * @param opacity number
-   * @returns
-   */
-  setBgOpacity(opacity: number) {
-    this.bgOpacity = opacity
     return this
   }
 
@@ -211,6 +212,31 @@ export class ImagePreviewController {
    */
   setTransitionIdGenerator(callback: TransitionIdGeneratorCallback) {
     this.transitionIdGenerator = callback
+    return this
+  }
+
+  /**
+   * 设置图片解码过程中是否对图源自动缩放
+   * @param isAutoResize
+   */
+  setAutoResize(isAutoResize: boolean) {
+    this.isAutoResize = isAutoResize
+    return this
+  }
+
+  /**
+   * 设置指示器类型
+   */
+  setIndicatorType(indicatorType: IndicatorType) {
+    this.indicatorType = indicatorType
+    return this
+  }
+
+  /**
+   * 设置指示器样式
+   */
+  setIndicatorStyle(indicatorStyle: DigitalIndicatorStyle | DotIndicatorStyle | IndicatorStyle) {
+    this.indicatorStyle = indicatorStyle
     return this
   }
 }

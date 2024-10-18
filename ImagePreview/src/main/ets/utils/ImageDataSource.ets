@@ -1,7 +1,8 @@
 import { ImageType, ImgParserCallBack } from "./common";
 
+@ObservedV2
 export class ImageDataSource implements IDataSource {
-  private data: ImageType[]
+  @Trace private data: ImageType[]
   private listeners: DataChangeListener[] = [];
   // 图片解析器
   private _imgParser?: ImgParserCallBack
@@ -51,7 +52,7 @@ export class ImageDataSource implements IDataSource {
 
   removeData(index: number) {
     this.data.splice(index, 1)
-    this.notifyDataRemove(index)
+    this.notifyDataReload()
   }
 
   // 通知LazyForEach组件在index对应索引处数据有变化，需要重建该子组件

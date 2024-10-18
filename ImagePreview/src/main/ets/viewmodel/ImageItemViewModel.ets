@@ -35,11 +35,13 @@ export class ImageItemViewModel {
   static readonly DEFAULT_MAX_SCALE_RATIO = 5
   // 最小缩放比例
   static readonly MIN_SCALE_RATIO = 1
+  // 默认 offsetY
+  defaultOffsetY: number = 0
 
   reset() {
     this.refreshScale(ImageItemViewModel.MIN_SCALE_RATIO)
     this.refreshCenter()
-    this.refreshOffset()
+    this.refreshOffset(undefined, this.defaultOffsetY)
   }
 
   /**
